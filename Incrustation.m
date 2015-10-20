@@ -58,4 +58,6 @@ end
 
 imagesc(DistanceMahalanobis), colorbar
 
+Seuil = 1000;
 
+save('incrustation.mat','Seuil','vecteurMoyenne','MatriceCovariance');
