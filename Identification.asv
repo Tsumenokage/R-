@@ -18,21 +18,15 @@ for i=frame:3
    TermeGeneral(:,:,2) = TermeGeneral(:,:,2)-vecteurMoyenne(2);
    TermeGeneral(:,:,3) = TermeGeneral(:,:,3)-vecteurMoyenne(3);
    
-% TermeGeneral = randi(100, 4, 4 ,3) ;
-% disp(TermeGeneral);
-
       [LargeurVideo,HauteurVideo,RGB] = size(TermeGeneral);
-        DistanceMahalanobis = zeros(1,LargeurVideo*HauteurVideo);
-%       DistanceMahalanobis = zeros(1,16);
+      DistanceMahalanobis = zeros(1,LargeurVideo*HauteurVideo);
 
-   TermeGeneral = reshape(TermeGeneral,[],3);
-   TermeGeneral = transpose(TermeGeneral);
+   TermeGeneral = reshape(TermeGeneral,3,[]);
    TermeInter(:,:) = inv(MatriceCovariance)*(TermeGeneral(:,:));
    DistanceMahalanobis(:,:) = sum(TermeGeneral(:,:).*TermeInter(:,:));
-%    DistanceMahalanobis = reshape(DistanceMahalanobis,4,4);
-   DistanceMahalanobis = reshape(DistanceMahalanobis,LargeurVideo,HauteurVideo);
+   DistanceMahalanobis = reshape(DistanceMahalanobis,2,5);
 
 end
-
- imagesc(DistanceMahalanobis), colorbar
+%   
+%    imagesc(DistanceMahalanobis), colorbar
  
