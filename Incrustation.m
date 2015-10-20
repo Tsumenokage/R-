@@ -20,9 +20,10 @@ figure; image(PicotPicture);
 
 %On calcule la moyenne des compossante RGB
 vecteurMoyenne = [0,0,0];
-for k=1:3
-    vecteurMoyenne(k) = mean(mean(PicotPicture(:,:,k)));
-end
+
+vecteurMoyenne(1) = mean(mean(PicotPicture(:,:,1)));
+vecteurMoyenne(2) = mean(mean(PicotPicture(:,:,2)));
+vecteurMoyenne(3) = mean(mean(PicotPicture(:,:,3)));
 
 MatriceCovariance = [0,0,0
     0,0,0
@@ -58,6 +59,6 @@ end
 
 imagesc(DistanceMahalanobis), colorbar
 
-Seuil = 1000;
+Seuil = 750;
 
 save('incrustation.mat','Seuil','vecteurMoyenne','MatriceCovariance');
