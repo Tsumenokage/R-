@@ -48,13 +48,16 @@ TermeGeneral(:,:,3) = TermeGeneral(:,:,3)-vecteurMoyenne(3);
 DistanceMahalanobis = zeros(LargeurVideo,HauteurVideo);
 
 
-for x=1:LargeurVideo
-    for y=1:HauteurVideo
-       TermeMaha=[TermeGeneral(x,y,1),TermeGeneral(x,y,2),TermeGeneral(x,y,3)];
-       TransposeMaha = transpose(TermeMaha);
-       DistanceMahalanobis(x,y) = (TermeMaha) * inv(MatriceCovariance)* (TransposeMaha);
-    end
-end
+% for x=1:LargeurVideo
+%     for y=1:HauteurVideo
+%        TermeMaha=[TermeGeneral(x,y,1),TermeGeneral(x,y,2),TermeGeneral(x,y,3)];
+%        TransposeMaha = transpose(TermeMaha);
+%        DistanceMahalanobis(x,y) = (TermeMaha) * inv(MatriceCovariance)* (TransposeMaha);
+%     end
+% end
+
+TermeMaha=[TermeGeneral(:,:,1),TermeGeneral(:,:,2),TermeGeneral(:,:,3)];
+DistanceMahalanobis(:,:) = TermeMaha.*(inv(MatriceCovariance)*TermeMaha);
 
 imagesc(DistanceMahalanobis), colorbar
 
