@@ -5,10 +5,6 @@ load('incrustation.mat')
 Video=VideoReader('vid_in.mp4');
 numFrames = get(Video,'NumberOfFrames');
 frame = 1;
-MatrixSeuil=zeros(1,numFrames);
-
-
-
 
 
 for i=frame:3
@@ -32,15 +28,24 @@ for i=frame:3
           
           
           if(DistanceMahalanobis(x,y) < Seuil)
-              DistanceMahalanobis(x,y) = 0;
-          else
               DistanceMahalanobis(x,y) = 1;
+          else
+              DistanceMahalanobis(x,y) = 0;
           end;
         
        end
    end
+   MatrixSeuil{i} = DistanceMahalanobis;
    
-   MatrixSeuil(1,:,i) = DistanceMahalanobis;
-   %imagesc(DistanceMahalanobis)
    
 end
+
+figure, imshow(MatrixSeuil{1})
+SE = strel('disk', 2, 4);
+Test = imerode(MatrixSeuil{1},SE);
+Test = imdilate(Test,SE);
+figure, imshow(Test)
+
+L=bwlabel(Test,4);
+
+figure, imagesc(L), colorbar

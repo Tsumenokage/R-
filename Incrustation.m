@@ -20,9 +20,10 @@ figure; image(PicotPicture);
 
 %On calcule la moyenne des compossante RGB
 vecteurMoyenne = [0,0,0];
-for k=1:3
-    vecteurMoyenne(k) = mean(mean(PicotPicture(:,:,k)));
-end
+
+vecteurMoyenne(1) = mean(mean(PicotPicture(:,:,1)));
+vecteurMoyenne(2) = mean(mean(PicotPicture(:,:,2)));
+vecteurMoyenne(3) = mean(mean(PicotPicture(:,:,3)));
 
 MatriceCovariance = [0,0,0
     0,0,0
@@ -48,19 +49,16 @@ TermeGeneral(:,:,3) = TermeGeneral(:,:,3)-vecteurMoyenne(3);
 DistanceMahalanobis = zeros(LargeurVideo,HauteurVideo);
 
 
-% for x=1:LargeurVideo
-%     for y=1:HauteurVideo
-%        TermeMaha=[TermeGeneral(x,y,1),TermeGeneral(x,y,2),TermeGeneral(x,y,3)];
-%        TransposeMaha = transpose(TermeMaha);
-%        DistanceMahalanobis(x,y) = (TermeMaha) * inv(MatriceCovariance)* (TransposeMaha);
-%     end
-% end
-
-TermeMaha=[TermeGeneral(:,:,1),TermeGeneral(:,:,2),TermeGeneral(:,:,3)];
-DistanceMahalanobis(:,:) = TermeMaha.*(inv(MatriceCovariance)*TermeMaha);
+for x=1:LargeurVideo
+    for y=1:HauteurVideo
+       TermeMaha=[TermeGeneral(x,y,1),TermeGeneral(x,y,2),TermeGeneral(x,y,3)];
+       TransposeMaha = transpose(TermeMaha);
+       DistanceMahalanobis(x,y) = (TermeMaha) * inv(MatriceCovariance)* (TransposeMaha);
+    end
+end
 
 imagesc(DistanceMahalanobis), colorbar
 
-Seuil = 1000;
+Seuil = 750;
 
 save('incrustation.mat','Seuil','vecteurMoyenne','MatriceCovariance');
